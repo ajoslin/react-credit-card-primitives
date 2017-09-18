@@ -60,10 +60,6 @@ class ExpirationPrimitive extends React.Component {
     if (Expiration.isPast(month, year)) return ExpirationPrimitive.ERROR_PAST_DATE
   }
 
-  handleInputRef = node => {
-    if (node) this.input = node
-  }
-
   handleChange = ev => {
     this.setRawValue(ev.target.value)
   }
