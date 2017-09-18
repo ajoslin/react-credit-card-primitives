@@ -1,0 +1,14 @@
+{
+  "name": "example",
+  "scripts": {
+    "start": "budo ./index.js --live --open --host localhost"
+  },
+  "browserify": {
+    "transform": "babelify"
+  },
+  "devDependencies": {
+    "babelify": "^7.3.0",
+    "budo": "^10.0.4",
+    "react-dom": "^15.6.1"
+  }
+}
