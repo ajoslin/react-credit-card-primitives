@@ -1,7 +1,7 @@
 const React = require('react')
 const PropTypes = require('prop-types')
 const Cvc = require('creditcards/cvc')
-const Types = require('creditcards-types')
+const Types = require('creditcards/types')
 const { callAll, INPUT_TYPE } = require('./util')
 
 const AUTOCOMPLETE = 'cc-csc'
@@ -12,7 +12,7 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
   static propTypes = {
     value: PropTypes.string,
     masked: PropTypes.bool,
-    cardType: PropTypes.oneOf(PropTypes.string),
+    cardType: PropTypes.string,
     onChange: PropTypes.func,
     render: PropTypes.func.isRequired
   }
@@ -42,7 +42,7 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
   }
 
   getPattern () {
-    const restrictedType = Types.get(this.props.cardType)
+    const restrictedType = this.props.cardType ? Types.get(this.props.cardType) : undefined
     return restrictedType !== undefined
       ? `[0-9]{${restrictedType.cvcLength}}`
       : '[0-9]{3,4}'
