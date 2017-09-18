@@ -22,8 +22,8 @@ module.exports = exports.default = class CreditCardPrimitive extends React.Compo
     masked: false,
     // By default, mask all but last4.
     getMaskedValue: ({value, valid}) => {
-      if (!valid) return value
-      return Card.format(this.getValue(value))
+      if (!valid) return Card.format(value)
+      return Card.format(value)
         .split(' ')
         .map((group, index, array) => {
           return index === array.length - 1
