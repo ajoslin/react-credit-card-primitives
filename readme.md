@@ -278,7 +278,7 @@ Use the `render` prop function to render your cvc input and any associated eleme
 The `render` prop function is called with the following `CvcStateAndHelpers` object:
 
 | property      | category    | type     | description                                                                                            |
-|---------------+-------------+----------+--------------------------------------------------------------------------------------------------------|
+|---------------|-------------|----------|--------------------------------------------------------------------------------------------------------|
 | value         | state       | string   | The currently entered cvc code                                                                         |
 | focused       | state       | boolean  | Whether the cvc input is focused                                                                       |
 | valid         | state       | boolean  | Whether the cvc input is valid. If `cardType` is provided, the cvc is validated against that cardType. |
