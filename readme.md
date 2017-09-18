@@ -18,7 +18,7 @@ When you need to build a credit card form, it's really hard to find something th
 - Customizable
 - Doesn't come with loads of CSS that you don't want to use.
 
-These principles follow the "bring your own render" philosophy, using [prop getters](https://github.com/paypal/downshift/blob/8563d4bae2af19fdc7242c66b551d46396234cf9/README.md#prop-getters) to hand you properties to put on your own elements to render the form.
+Often when building a custom credit card form, all you want is the building blocks. This library provides those using the "bring your own render" philosophy, using [prop getters](https://github.com/paypal/downshift/blob/8563d4bae2af19fdc7242c66b551d46396234cf9/README.md#prop-getters) to hand you properties to put on your own elements to render the form.
 
 ### Example
 
