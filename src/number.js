@@ -1,7 +1,6 @@
 const React = require('react')
 const PropTypes = require('prop-types')
 const Card = require('creditcards/card')
-const Types = require('creditcards-types')
 
 const { callAll, INPUT_TYPE } = require('./util')
 const AUTOCOMPLETE = 'cardnumber'
@@ -15,7 +14,7 @@ module.exports = exports.default = class CreditCardPrimitive extends React.Compo
     render: PropTypes.func.isRequired,
     masked: PropTypes.boolean,
     getMaskedValue: PropTypes.func,
-    cardTypes: PropTypes.arrayOf(PropTypes.oneOf(Object.keys(Types.types)))
+    cardTypes: PropTypes.arrayOf(PropTypes.string)
   }
 
   static defaultProps = {

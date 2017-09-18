@@ -12,7 +12,7 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
   static propTypes = {
     value: PropTypes.string,
     masked: PropTypes.bool,
-    cardType: PropTypes.oneOf(Object.keys(Types.types)),
+    cardType: PropTypes.oneOf(PropTypes.string),
     onChange: PropTypes.func,
     render: PropTypes.func.isRequired
   }
@@ -42,9 +42,9 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
   }
 
   getPattern () {
-    const {cvcLength} = Types.types[this.props.cardType] || {}
-    return cvcLength
-      ? `[0-9]{${cvcLength}}`
+    const restrictedType = Types.get(this.props.cardType)
+    return restrictedType !== undefined
+      ? `[0-9]{${restrictedType.cvcLength}}`
       : '[0-9]{3,4}'
   }
 

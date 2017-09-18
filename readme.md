@@ -113,9 +113,9 @@ The default behavior is as follows. Given the following markup, the input will h
 
 > `Array<creditcards-types type id>` | optional
 
-[All `creditcards-types` Type Ids (export keys)](https://github.com/bendrucker/creditcards-types/blob/master/src/types.js)
+[All `creditcards-types` Type Ids](https://github.com/bendrucker/creditcards-types#card-types)
 
-Example: `<Number cardTypes={['americanExpress', 'visa']} />`
+Example: `<Number cardTypes={['American Express', 'Visa']} />`
 
 The given types, if provided, will be the only allowed credit card types.
 
@@ -246,7 +246,7 @@ If true, the input will become type `password` while blurred, masking the user's
 
 > `string<creditcards-types type id>`
 
-A creditcards-types type id is one of [these keys](https://github.com/bendrucker/creditcards-types/blob/master/src/types.js).
+A creditcards-types type id is one of [these](https://github.com/bendrucker/creditcards-types#card-types).
 
 By default, the cvc input will be validated as needing to be of length 3 or 4.
 
@@ -255,7 +255,7 @@ If a type id is given, the cvc input must match the length of the given type.
 For example, the following will validate the length as 4 for american express cards:
 
 ```js
-<Cvc cardType='americanExpress' />
+<Cvc cardType='American Express' />
 ```
 
 #### onChange
