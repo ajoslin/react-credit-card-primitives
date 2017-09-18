@@ -12,7 +12,7 @@ module.exports = exports.default = class CreditCardPrimitive extends React.Compo
     value: PropTypes.string,
     onChange: PropTypes.func,
     render: PropTypes.func.isRequired,
-    masked: PropTypes.boolean,
+    masked: PropTypes.bool,
     getMaskedValue: PropTypes.func,
     cardTypes: PropTypes.arrayOf(PropTypes.string)
   }
@@ -23,7 +23,7 @@ module.exports = exports.default = class CreditCardPrimitive extends React.Compo
     // By default, mask all but last4.
     getMaskedValue: ({value, valid}) => {
       if (!valid) return value
-      return Card.format(value)
+      return Card.format(this.getValue(value))
         .split(' ')
         .map((group, index, array) => {
           return index === array.length - 1

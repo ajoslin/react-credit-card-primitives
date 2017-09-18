@@ -130,18 +130,13 @@ function parseInput (raw) {
 }
 
 function formatExpiration (expiration = {}) {
-  if (!expiration.month && !expiration.year) return
+  if (!expiration.month || !expiration.year) return
   return [
-    !expiration.month
-      ? undefined
-      : pad(expiration.month),
-    !expiration.year
-      ? undefined
-      : (expiration.year >= 2000 && expiration.year <= 2100
-         ? String(expiration.year).substring(2)
-         : expiration.year)
+    pad(expiration.month),
+    expiration.year >= 2000 && expiration.year <= 2100
+      ? String(expiration.year).substring(2)
+      : expiration.year
   ]
-    .filter(Boolean)
     .join(SEPARATOR)
 }
 
