@@ -6,6 +6,7 @@ const { callAll, INPUT_TYPE } = require('./util')
 
 const AUTOCOMPLETE = 'cc-csc'
 const NAME = 'cvc'
+const MASK_CHAR = '•'
 
 module.exports = exports.default = class CvcPrimitive extends React.Component {
   static propTypes = {
@@ -41,9 +42,10 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
   }
 
   getPattern () {
-    return this.props.cardType === undefined
-      ? '[0-9]{3,4}'
-      : `[0-9]{${Types.types[this.props.cardType].cvcLength}}`
+    const {cvcLength} = Types.types[this.props.cardType] || {}
+    return cvcLength
+      ? `[0-9]{${cvcLength}}`
+      : '[0-9]{3,4}'
   }
 
   setValue = (value) => {
@@ -64,10 +66,12 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
     ...props,
     name: NAME,
     autoComplete: AUTOCOMPLETE,
-    type: (!this.state.focused && this.props.masked) ? 'password' : INPUT_TYPE,
+    type: INPUT_TYPE,
     placeholder: 'CVC',
     pattern: this.getPattern(),
-    value: this.getValue(),
+    value: (this.props.masked && !this.state.focused)
+      ? this.getValue().replace(/./g, MASK_CHAR)
+      : this.getValue(),
     onFocus: callAll(props.onFocus, this.handleFocus),
     onBlur: callAll(props.onBlur, this.handleBlur),
     onChange: callAll(props.onChange, this.handleChange)
