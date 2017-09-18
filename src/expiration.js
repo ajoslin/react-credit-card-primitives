@@ -75,8 +75,9 @@ class ExpirationPrimitive extends React.Component {
       this.setState({
         rawValue,
         ...parseInput(rawValue)
-      }, () => this.props.onChange(this.getStateAndHelpers())
-                   )
+      }, () => {
+        this.props.onChange(this.getStateAndHelpers())
+      })
     }
   }
 
