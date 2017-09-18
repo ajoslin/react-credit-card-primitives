@@ -48,7 +48,6 @@
   },
   "dependencies": {
     "creditcards": "^2.1.2",
-    "creditcards-types": "^1.6.2",
     "is-android": "^1.0.1",
     "prop-types": "^15.5.10"
   }
