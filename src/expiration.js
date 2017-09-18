@@ -84,17 +84,27 @@ class ExpirationPrimitive extends React.Component {
     }
   }
 
-  getInputProps = (props = {}) => ({
-    name: NAME,
-    autoComplete: AUTOCOMPLETE,
-    type: INPUT_TYPE,
-    placeholder: `MM${SEPARATOR}YY`,
-    pattern: '[0-9]*',
-    maxLength: 2 + SEPARATOR.length + 4,
-    onChange: callAll(props.onChange, this.handleChange),
-    value: formatExpiration(this.getExpiration(props)) ||
-      formatRawValue(this.state.rawValue),
-    ...props
+  getInputProps = (props = {}) => {
+    const value = this.getExpiration(props)
+    return {
+      ...props,
+      'aria-invalid': (value.month || value.year)
+        ? String(!this.isValid(props.value))
+        : undefined,
+      name: NAME,
+      autoComplete: AUTOCOMPLETE,
+      type: INPUT_TYPE,
+      placeholder: `MM${SEPARATOR}YY`,
+      pattern: '[0-9]*',
+      maxLength: 2 + SEPARATOR.length + 4,
+      onChange: callAll(props.onChange, this.handleChange),
+      value: formatExpiration(this.getExpiration(props)) || formatRawValue(this.state.rawValue)
+    }
+  }
+
+  getLabelProps = (props = {}) => ({
+    ...props,
+    htmlFor: NAME
   })
 
   getStateAndHelpers (props = {}) {

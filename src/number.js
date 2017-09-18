@@ -76,19 +76,30 @@ module.exports = exports.default = class CreditCardPrimitive extends React.Compo
   handleBlur = ev => this.setState({ focused: false })
   handleChange = ev => this.setValue(ev.target.value)
 
-  getInputProps = (props = {}) => ({
+  getInputProps = (props = {}) => {
+    const value = this.getValue(props.value)
+    return {
+      ...props,
+      'aria-invalid': value
+        ? String(!this.isValid(value))
+        : value,
+      name: NAME,
+      autoComplete: AUTOCOMPLETE,
+      type: INPUT_TYPE,
+      placeholder: 'Card number',
+      pattern: '[0-9]*',
+      value: (this.props.masked && !this.state.focused)
+        ? this.props.getMaskedValue(this.getStateAndHelpers(props))
+        : Card.format(this.getValue(props.value)),
+      onFocus: callAll(props.onFocus, this.handleFocus),
+      onBlur: callAll(props.onBlur, this.handleBlur),
+      onChange: callAll(props.onChange, this.handleChange)
+    }
+  }
+
+  getLabelProps = (props = {}) => ({
     ...props,
-    name: NAME,
-    autoComplete: AUTOCOMPLETE,
-    type: INPUT_TYPE,
-    placeholder: 'Card number',
-    pattern: '[0-9]*',
-    value: (this.props.masked && !this.state.focused)
-      ? this.props.getMaskedValue(this.getStateAndHelpers(props))
-      : Card.format(this.getValue(props.value)),
-    onFocus: callAll(props.onFocus, this.handleFocus),
-    onBlur: callAll(props.onBlur, this.handleBlur),
-    onChange: callAll(props.onChange, this.handleChange)
+    htmlFor: NAME
   })
 
   getStateAndHelpers (props = {}) {

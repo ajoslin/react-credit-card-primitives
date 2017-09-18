@@ -77,6 +77,11 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
     onChange: callAll(props.onChange, this.handleChange)
   })
 
+  getLabelProps = (props = {}) => ({
+    ...props,
+    htmlFor: NAME
+  })
+
   getStateAndHelpers (props = {}) {
     return {
       focused: this.state.focused,
