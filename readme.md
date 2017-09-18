@@ -1,13 +1,13 @@
-# react-credit-card-primitives [![Build Status](https://travis-ci.org/ajoslin/react-stepper-primitive.svg?branch=master)](https://travis-ci.org/ajoslin/react-credit-card-primitives)
+# react-credit-card-primitives [![Build Status](https://travis-ci.org/ajoslin/react-credit-card-primitives.svg?branch=master)](https://travis-ci.org/ajoslin/react-credit-card-primitives)
 
 > React primitives to build a credit card form.
 
-Relies on the [creditcards](https://github.com/bendrucker/creditcards) library. **Much** is lifted from @bendrucker's [virtual-credit-cards](https://github.com/bendrucker/virtual-credit-cards).
+Relies on the [creditcards](https://github.com/bendrucker/creditcards) library. Credit to @bendrucker for parsing and formatting logic in [virtual-credit-cards](https://github.com/bendrucker/virtual-credit-cards).
 
 ### Install
 
 ```
-$ npm install --save react-stepper-primitive
+$ npm install --save react-credit-card-primitives
 ```
 
 ### Why?
@@ -20,8 +20,6 @@ When you need to build a credit card form, it's really hard to find something th
 
 These principles follow the "bring your own render" philosophy, using [prop getters](https://github.com/paypal/downshift/blob/8563d4bae2af19fdc7242c66b551d46396234cf9/README.md#prop-getters) to hand you properties to put on your own elements to render the form.
 
-[Try a demo on Codesandbox]()
-
 ### Example
 
 ```jsx
@@ -33,9 +31,7 @@ ReactDOM.render(
       render={({
         getInputProps,
         valid
-      }) => (
-        <input {...getInputProps()} className={valid ? '' : 'error'} />
-      )} />
+      }) => <input {...getInputProps()} className={valid ? '' : 'error'} />} />
     <Expiration
       onChange={({month, year, valid}) => console.log(month, year, valid)}
       render={({
@@ -54,15 +50,11 @@ ReactDOM.render(
         </div>
       )} />
     <Cvc
-      onChange={({value, valid}) => console.log(value, valid)}
-      masked={true}
       onChange={({value, valid}) => console.log(value, valid)
       render={({
         getInputProps,
         valid
-      }) => (
-        <input {...getInputProps()} className={valid ? '' : 'error'} />
-      )} />
+      }) => <input {...getInputProps()} className={valid ? '' : 'error'} />} />
     />
   </div>,
   document.body
