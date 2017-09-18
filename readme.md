@@ -1,6 +1,6 @@
 # react-credit-card-primitives [![Build Status](https://travis-ci.org/ajoslin/react-credit-card-primitives.svg?branch=master)](https://travis-ci.org/ajoslin/react-credit-card-primitives)
 
-> React primitives to build a credit card form.
+> React primitives to build a credit card form. 7kb gzipped.
 
 Relies on the [creditcards](https://github.com/bendrucker/creditcards) library. Credit to @bendrucker for parsing and formatting logic in [virtual-credit-cards](https://github.com/bendrucker/virtual-credit-cards).
 
