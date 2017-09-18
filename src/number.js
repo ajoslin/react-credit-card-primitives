@@ -6,22 +6,39 @@ const Types = require('creditcards-types')
 const { callAll, INPUT_TYPE } = require('./util')
 const AUTOCOMPLETE = 'cardnumber'
 const NAME = 'cc-number'
+const MASK_CHAR = '•'
 
 module.exports = exports.default = class CreditCardPrimitive extends React.Component {
   static propTypes = {
     value: PropTypes.string,
     onChange: PropTypes.func,
     render: PropTypes.func.isRequired,
+    masked: PropTypes.boolean,
+    getMaskedValue: PropTypes.func,
     cardTypes: PropTypes.arrayOf(PropTypes.oneOf(Object.keys(Types.types)))
   }
 
   static defaultProps = {
     cardTypes: [],
+    masked: false,
+    // By default, mask all but last4.
+    getMaskedValue: ({value, valid}) => {
+      if (!valid) return value
+      return Card.format(value)
+        .split(' ')
+        .map((group, index, array) => {
+          return index === array.length - 1
+            ? group
+            : group.replace(/./g, MASK_CHAR)
+        })
+        .join(' ')
+    },
     onChange: () => {}
   }
 
   state = {
-    value: ''
+    value: '',
+    focused: false
   }
 
   isControlled () {
@@ -56,6 +73,8 @@ module.exports = exports.default = class CreditCardPrimitive extends React.Compo
     }
   }
 
+  handleFocus = ev => this.setState({ focused: true })
+  handleBlur = ev => this.setState({ focused: false })
   handleChange = ev => this.setValue(ev.target.value)
 
   getInputProps = (props = {}) => ({
@@ -65,7 +84,11 @@ module.exports = exports.default = class CreditCardPrimitive extends React.Compo
     type: INPUT_TYPE,
     placeholder: 'Card number',
     pattern: '[0-9]*',
-    value: Card.format(this.getValue(props.value)),
+    value: (this.props.masked && !this.state.focused)
+      ? this.props.getMaskedValue(this.getStateAndHelpers(props))
+      : Card.format(this.getValue(props.value)),
+    onFocus: callAll(props.onFocus, this.handleFocus),
+    onBlur: callAll(props.onBlur, this.handleBlur),
     onChange: callAll(props.onChange, this.handleChange)
   })
 
