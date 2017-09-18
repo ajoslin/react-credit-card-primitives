@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic amex invalid 1`] = `
+Object {
+  "aria-invalid": "true",
+  "autoComplete": "cardnumber",
+  "name": "cc-number",
+  "onBlur": [Function],
+  "onChange": [Function],
+  "onFocus": [Function],
+  "pattern": "[0-9]*",
+  "placeholder": "Card number",
+  "type": "text",
+  "value": "3782 822463 1000",
+}
+`;
+
+exports[`basic amex valid 1`] = `
+Object {
+  "aria-invalid": "false",
+  "autoComplete": "cardnumber",
+  "name": "cc-number",
+  "onBlur": [Function],
+  "onChange": [Function],
+  "onFocus": [Function],
+  "pattern": "[0-9]*",
+  "placeholder": "Card number",
+  "type": "text",
+  "value": "3782 822463 10005",
+}
+`;
+
+exports[`basic no input 1`] = `
+Object {
+  "aria-invalid": "",
+  "autoComplete": "cardnumber",
+  "name": "cc-number",
+  "onBlur": [Function],
+  "onChange": [Function],
+  "onFocus": [Function],
+  "pattern": "[0-9]*",
+  "placeholder": "Card number",
+  "type": "text",
+  "value": "",
+}
+`;
+
+exports[`validation on given card types 1`] = `
+Object {
+  "getInputProps": [Function],
+  "setValue": [Function],
+  "type": "American Express",
+  "valid": false,
+  "value": "378282246310005",
+}
+`;
+
+exports[`validation on given card types 2`] = `
+Object {
+  "getInputProps": [Function],
+  "setValue": [Function],
+  "type": "Visa",
+  "valid": true,
+  "value": "4242424242424242",
+}
+`;
