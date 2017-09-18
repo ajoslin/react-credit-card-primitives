@@ -95,6 +95,20 @@ The `onChange` prop is called whenever `value` changes.
 
 Called when the value changes. `NumberStateAndHelpers` is the same object received by the `render` prop function.
 
+#### masked
+
+> `boolean` | optional
+
+If true, when a valid credit card number is typed and the input is not focused, the input will be masked.
+
+All but the last 4 digits of the credit card number will be replaced with `•`.
+
+Use the `getMaskedValue(object: NumberStateAndHelpers): rawValue` prop to customize the masked value.
+
+The default behavior is as follows. Given the following markup, the input will have the value `'•••• •••• •••• 4242'`:
+
+`<Number value='4242424242424242' masked={true} render={({getInputProps}) => <input {...getInputProps()} />} />`
+
 #### cardTypes
 
 > `Array<creditcards-types type id>` | optional
@@ -200,8 +214,6 @@ The possible values for `error` in `ExpirationStateAndHelpers`. These are provid
 ### `<Cvc>`
 
 Create a cvc input. Validates user input with [creditcards.cvc](https://github.com/bendrucker/creditcards#cvc).
-
-Allows masking (while blurred, input becomes type="password").
 
 ```js
 import {Cvc} from 'react-credit-card-primitives'

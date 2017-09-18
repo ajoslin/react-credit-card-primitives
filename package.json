@@ -50,7 +50,6 @@
     "creditcards": "^2.1.2",
     "creditcards-types": "^1.6.2",
     "is-android": "^1.0.1",
-    "numeric-pattern": "^1.0.0",
     "prop-types": "^15.5.10"
   }
 }

@@ -15,6 +15,7 @@ class App extends React.Component {
     return <div>
       <style dangerouslySetInnerHTML={{__html: 'div { word-break: break-all; }'}} />
       <Number
+        masked
         cardTypes={this.state.restrictAmex ? ['americanExpress'] : []}
         render={({value, valid, type, getInputProps}) => (
           <div>
