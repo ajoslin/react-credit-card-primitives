@@ -65,7 +65,7 @@ ReactDOM.render(
 
 ## API
 
-### `<Number>`
+## `<Number>`
 
 Create a credit card input that formats the user's input with spaces every four digits. Formats and validates user input with [creditcards.card](https://github.com/bendrucker/creditcards#card).
 
@@ -111,9 +111,9 @@ The default behavior is as follows. Given the following markup, the input will h
 
 #### cardTypes
 
-> `Array<creditcards-types type id>` | optional
+> `Array<Card Type Id>` | optional
 
-[All `creditcards-types` Type Ids](https://github.com/bendrucker/creditcards-types#card-types)
+[All Card Type Ids](https://github.com/bendrucker/creditcards-types#card-types)
 
 Example: `<Number cardTypes={['American Express', 'Visa']} />`
 
@@ -141,7 +141,7 @@ The `render` prop function is called with the following `NumberStateAndHelpers` 
 | getLabelProps | prop getter | function | The properties to put on your `<label>` element.                                                                                                                                                                                                                                          |
 
 
-### `<Expiration>`
+## `<Expiration>`
 
 Create an expiration input that automatically puts a separator (` / `) between month and year. Formats and validates user input with [creditcards.expiration](https://github.com/bendrucker/creditcards#expiration).
 
@@ -214,7 +214,7 @@ The possible values for `error` in `ExpirationStateAndHelpers`. These are provid
 - `Expiration.ERROR_YEAR` ('err_year')
 - `Expiration.ERROR_PAST_DATE` ('err_pastdate')
 
-### `<Cvc>`
+## `<Cvc>`
 
 Create a cvc input. Validates user input with [creditcards.cvc](https://github.com/bendrucker/creditcards#cvc).
 
@@ -243,13 +243,13 @@ The `onChange` prop is called whenever `value` changes.
 
 > `boolean` | optional
 
-If true, the input will become type `password` while blurred, masking the user's cvc input.
+If true, the input's value will be replaced with `•` while blurred.
 
 #### cardType
 
-> `string<creditcards-types type id>`
+> `string<Card Type Id>`
 
-A creditcards-types type id is one of [these](https://github.com/bendrucker/creditcards-types#card-types).
+[All Card Type Ids](https://github.com/bendrucker/creditcards-types#card-types).
 
 By default, the cvc input will be validated as needing to be of length 3 or 4.
 
