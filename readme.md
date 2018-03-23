@@ -50,7 +50,7 @@ ReactDOM.render(
         </div>
       )} />
     <Cvc
-      onChange={({value, valid}) => console.log(value, valid)
+      onChange={({value, valid}) => console.log(value, valid)}
       render={({
         getInputProps,
         valid
