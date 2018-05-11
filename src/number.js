@@ -7,7 +7,7 @@ const AUTOCOMPLETE = 'cardnumber'
 const NAME = 'cc-number'
 const MASK_CHAR = '•'
 
-module.exports = exports.default = class CreditCardPrimitive extends React.Component {
+module.exports = exports.default = class NumberPrimitive extends React.Component {
   static propTypes = {
     value: PropTypes.string,
     defaultValue: PropTypes.string,

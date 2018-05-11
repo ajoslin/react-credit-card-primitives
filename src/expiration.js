@@ -29,10 +29,15 @@ class ExpirationPrimitive extends React.Component {
   static ERROR_YEAR = 'err_year'
   static ERROR_PAST_DATE = 'err_pastdate'
 
-  state = {
-    rawValue: '',
-    month: this.props.defaultMonth,
-    year: this.props.defaultYear
+  constructor (props) {
+    super(props)
+    this.state = {
+      month: this.props.defaultMonth,
+      year: this.props.defaultYear
+    }
+    if (this.state.month && this.state.year) {
+      this.state.rawValue = formatExpiration(this.state)
+    }
   }
 
   isControlled () {
