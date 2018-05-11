@@ -19,7 +19,6 @@ test('value formatting', () => {
   expect(getInputProps().value).toEqual('4242 42')
 
   setValue('4242424242424242')
-  console.log(wrapper.state('value'))
   expect(getInputProps().value).toEqual('4242 4242 4242 4242')
 })
 
@@ -98,4 +97,13 @@ test('onChange w/ controlled input', () => {
 
   // No setState because it's a controlled input
   expect(wrapper.state('value')).toEqual('')
+})
+
+test('defaultValue', () => {
+  const {wrapper, setValue} = setup({
+    defaultValue: '4242'
+  })
+  expect(wrapper.state('value')).toBe('4242')
+  setValue('')
+  expect(wrapper.state('value')).toBe('')
 })

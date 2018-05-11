@@ -14,6 +14,8 @@ class ExpirationPrimitive extends React.Component {
   static propTypes = {
     month: PropTypes.number,
     year: PropTypes.number,
+    defaultMonth: PropTypes.number,
+    defaultYear: PropTypes.number,
     onChange: PropTypes.func,
     render: PropTypes.func.isRequired
   }
@@ -29,8 +31,8 @@ class ExpirationPrimitive extends React.Component {
 
   state = {
     rawValue: '',
-    month: undefined,
-    year: undefined
+    month: this.props.defaultMonth,
+    year: this.props.defaultYear
   }
 
   isControlled () {

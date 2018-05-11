@@ -14,6 +14,7 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
     masked: PropTypes.bool,
     cardType: PropTypes.string,
     onChange: PropTypes.func,
+    defaultValue: PropTypes.string,
     render: PropTypes.func.isRequired
   }
 
@@ -23,7 +24,7 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
   }
 
   state = {
-    value: '',
+    value: this.props.defaultValue || '',
     focused: false
   }
 

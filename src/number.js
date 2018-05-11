@@ -10,6 +10,7 @@ const MASK_CHAR = '•'
 module.exports = exports.default = class CreditCardPrimitive extends React.Component {
   static propTypes = {
     value: PropTypes.string,
+    defaultValue: PropTypes.string,
     onChange: PropTypes.func,
     render: PropTypes.func.isRequired,
     masked: PropTypes.bool,
@@ -36,7 +37,7 @@ module.exports = exports.default = class CreditCardPrimitive extends React.Compo
   }
 
   state = {
-    value: '',
+    value: this.props.defaultValue || '',
     focused: false
   }
 
