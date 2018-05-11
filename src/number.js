@@ -99,7 +99,6 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
       type: INPUT_TYPE,
       maxLength: this.getMaxLength(value),
       placeholder: 'Card number',
-      pattern: '[0-9]*',
       value: (this.props.masked && !this.state.focused)
         ? this.props.getMaskedValue(this.getStateAndHelpers(props))
         : Card.format(this.getValue(props.value)),
