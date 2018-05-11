@@ -256,6 +256,11 @@ If `value` is provided, the Cvc component becomes a "controlled component".
 
 The `onChange` prop is called whenever `value` changes.
 
+#### defaultValue
+
+> `string` | optional
+
+If no value is provided, this will set the initial value.
 
 #### masked
 
