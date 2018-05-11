@@ -35,7 +35,7 @@ class ExpirationPrimitive extends React.Component {
       month: this.props.defaultMonth,
       year: this.props.defaultYear
     }
-    if (this.state.month && this.state.year) {
+    if (this.state.month || this.state.year) {
       this.state.rawValue = formatExpiration(this.state)
     }
   }
