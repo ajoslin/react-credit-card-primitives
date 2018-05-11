@@ -89,6 +89,12 @@ If `value` is provided, the Number component becomes a "controlled component".
 
 The `onChange` prop is called whenever `value` changes.
 
+#### defaultValue
+
+> `string` | optional
+
+If no value is provided, this will set the initial value.
+
 #### onChange
 
 > `function(object: NumberStateAndHelpers)` | optional
@@ -178,6 +184,18 @@ If not provided, the Expiration component will manage its year via internal stat
 If provided, it must be provided with the `month` prop.
 
 The `onChange` prop is called whenever `year` changes.
+
+#### defaultMonth
+
+> `number` | optional
+
+If no month is provided, this will set the initial month.
+
+#### defaultYear
+
+> `number` | optional
+
+If no year is provided, this will set the initial year.
 
 #### onChange
 
