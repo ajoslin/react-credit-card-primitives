@@ -4,6 +4,7 @@ exports[`basic amex invalid 1`] = `
 Object {
   "aria-invalid": "true",
   "autoComplete": "cardnumber",
+  "maxLength": undefined,
   "name": "cc-number",
   "onBlur": [Function],
   "onChange": [Function],
@@ -19,6 +20,7 @@ exports[`basic amex valid 1`] = `
 Object {
   "aria-invalid": "false",
   "autoComplete": "cardnumber",
+  "maxLength": undefined,
   "name": "cc-number",
   "onBlur": [Function],
   "onChange": [Function],
@@ -34,6 +36,7 @@ exports[`basic no input 1`] = `
 Object {
   "aria-invalid": "",
   "autoComplete": "cardnumber",
+  "maxLength": undefined,
   "name": "cc-number",
   "onBlur": [Function],
   "onChange": [Function],

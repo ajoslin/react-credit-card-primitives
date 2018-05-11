@@ -97,7 +97,7 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
       name: NAME,
       autoComplete: AUTOCOMPLETE,
       type: INPUT_TYPE,
-      maxLength: getMaxLength(value),
+      maxLength: this.getMaxLength(value),
       placeholder: 'Card number',
       pattern: '[0-9]*',
       value: (this.props.masked && !this.state.focused)
