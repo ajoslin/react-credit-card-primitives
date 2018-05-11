@@ -42,6 +42,11 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
     return Cvc.isValid(value, this.props.cardType)
   }
 
+  getMaxLength () {
+    const restrictedType = Types.get(this.props.cardType || '')
+    return restrictedType !== undefined ? restrictedType.cvcLength : 4
+  }
+
   getPattern () {
     const restrictedType = Types.get(this.props.cardType || '')
     return restrictedType !== undefined
@@ -69,6 +74,7 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
     autoComplete: AUTOCOMPLETE,
     type: INPUT_TYPE,
     placeholder: 'CVC',
+    maxLength: this.getMaxLength(),
     pattern: this.getPattern(),
     value: (this.props.masked && !this.state.focused)
       ? this.getValue().replace(/./g, MASK_CHAR)

@@ -1,6 +1,7 @@
 const React = require('react')
 const PropTypes = require('prop-types')
 const Card = require('creditcards/card')
+const Types = require('creditcards/types')
 
 const { callAll, INPUT_TYPE } = require('./util')
 const AUTOCOMPLETE = 'cardnumber'
@@ -58,6 +59,15 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
     return this.props.cardTypes.some(type => Card.isValid(value, type))
   }
 
+  getMaxLength (value) {
+    const type = Types.get(Card.type(this.getValue(value), true) || '')
+    if (!type || !type.digits) return
+    if (Array.isArray(type.digits)) {
+      return Math.max.apply(Math, type.digits)
+    }
+    return type.digits
+  }
+
   setValue = (value = '') => {
     if (value) {
       // parse -> format -> parse to truncate invalid card patterns
@@ -87,6 +97,7 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
       name: NAME,
       autoComplete: AUTOCOMPLETE,
       type: INPUT_TYPE,
+      maxLength: getMaxLength(value),
       placeholder: 'Card number',
       pattern: '[0-9]*',
       value: (this.props.masked && !this.state.focused)
