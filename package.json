@@ -1,7 +1,7 @@
 {
   "name": "react-credit-card-primitives",
   "main": "dist/index.js",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "React primitives for building credit card components",
   "scripts": {
     "test": "jest",
