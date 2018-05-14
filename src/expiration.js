@@ -99,7 +99,6 @@ class ExpirationPrimitive extends React.Component {
       autoComplete: AUTOCOMPLETE,
       type: INPUT_TYPE,
       placeholder: `MM${SEPARATOR}YY`,
-      pattern: '[0-9]*',
       maxLength: 2 + SEPARATOR.length + 4,
       onChange: callAll(props.onChange, this.handleChange),
       value: formatExpiration(this.getExpiration(props)) || formatRawValue(this.state.rawValue)
