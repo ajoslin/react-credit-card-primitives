@@ -44,11 +44,13 @@ test('validation on given card types', () => {
   setValue('378282246310005')
   expect(wrapper.instance().isValid()).toBe(false)
   expect(wrapper.instance().getStateAndHelpers()).toMatchSnapshot()
+  expect(wrapper.instance().getStateAndHelpers().type).toEqual('')
 
   // Make it Visa and it will be valid.
   setValue('4242424242424242')
   expect(wrapper.instance().isValid()).toBe(true)
   expect(wrapper.instance().getStateAndHelpers()).toMatchSnapshot()
+  expect(wrapper.instance().getStateAndHelpers().type).toEqual('Visa')
 })
 
 test('masked', () => {

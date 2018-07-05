@@ -16,7 +16,7 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
     render: PropTypes.func.isRequired,
     masked: PropTypes.bool,
     getMaskedValue: PropTypes.func,
-    cardTypes: PropTypes.arrayOf(PropTypes.string)
+    cardTypes: PropTypes.arrayOf(PropTypes.string),
   }
 
   static defaultProps = {
@@ -115,10 +115,15 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
 
   getStateAndHelpers (props = {}) {
     const value = this.getValue(props.value)
+    let type = Card.type(value, true)
+    if (this.props.cardTypes.length &&
+        this.props.cardTypes.indexOf(type) === -1) {
+      type = ''
+    }
     return {
+      type,
       value,
       valid: this.isValid(props.value),
-      type: Card.type(value, true),
       setValue: this.setValue,
       getInputProps: this.getInputProps
     }

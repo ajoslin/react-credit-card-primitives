@@ -49,7 +49,7 @@ exports[`validation on given card types 1`] = `
 Object {
   "getInputProps": [Function],
   "setValue": [Function],
-  "type": "American Express",
+  "type": "",
   "valid": false,
   "value": "378282246310005",
 }
