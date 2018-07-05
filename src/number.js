@@ -1,7 +1,7 @@
 const React = require('react')
 const PropTypes = require('prop-types')
-const Card = require('creditcards/card')
-const Types = require('creditcards/types')
+const creditcards = require('creditcards')
+const find = require('array-find')
 
 const { callAll, INPUT_TYPE } = require('./util')
 const AUTOCOMPLETE = 'cardnumber'
@@ -15,26 +15,27 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
     onChange: PropTypes.func,
     render: PropTypes.func.isRequired,
     masked: PropTypes.bool,
-    getMaskedValue: PropTypes.func,
     cardTypes: PropTypes.arrayOf(PropTypes.string),
+    creditcards: PropTypes.object
   }
 
   static defaultProps = {
     cardTypes: [],
     masked: false,
-    // By default, mask all but last4.
-    getMaskedValue: ({value, valid}) => {
-      if (!valid) return Card.format(value)
-      return Card.format(value)
-        .split(' ')
-        .map((group, index, array) => {
-          return index === array.length - 1
-            ? group
-            : group.replace(/./g, MASK_CHAR)
-        })
-        .join(' ')
-    },
+    creditcards,
     onChange: () => {}
+  }
+
+  getMaskedValue ({value, valid}) {
+    if (!valid) return this.props.creditcards.card.format(value)
+    return this.props.creditcards.card.format(value)
+      .split(' ')
+      .map((group, index, array) => {
+        return index === array.length - 1
+          ? group
+          : group.replace(/./g, MASK_CHAR)
+      })
+      .join(' ')
   }
 
   state = {
@@ -54,24 +55,29 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
 
   isValid (value = this.getValue()) {
     if (!this.props.cardTypes.length) {
-      return Card.isValid(value)
+      return this.props.creditcards.card.isValid(value)
     }
-    return this.props.cardTypes.some(type => Card.isValid(value, type))
+    return this.props.cardTypes.some(type => this.props.creditcards.card.isValid(value, type))
   }
 
   getMaxLength (value) {
-    const type = Types.get(Card.type(this.getValue(value), true) || '')
-    if (!type || !type.digits) return
-    if (Array.isArray(type.digits)) {
-      return Math.max.apply(Math, type.digits)
+    const currentType = this.props.creditcards.card.type(this.getValue(value), true) || ''
+    const typeObject = find(
+      this.props.creditcards.card.types,
+      type => type.name === currentType
+    )
+    if (!typeObject || !typeObject.digits) return
+    if (Array.isArray(typeObject.digits)) {
+      return Math.max.apply(Math, typeObject.digits)
     }
-    return type.digits
+    return typeObject.digits
   }
 
   setValue = (value = '') => {
     if (value) {
+      const { parse, format } = this.props.creditcards.card
       // parse -> format -> parse to truncate invalid card patterns
-      value = Card.parse(Card.format(Card.parse(value)))
+      value = parse(format(parse(value)))
     }
 
     if (this.isControlled()) {
@@ -100,8 +106,8 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
       maxLength: this.getMaxLength(value),
       placeholder: 'Card number',
       value: (this.props.masked && !this.state.focused)
-        ? this.props.getMaskedValue(this.getStateAndHelpers(props))
-        : Card.format(this.getValue(props.value)),
+        ? this.getMaskedValue(this.getStateAndHelpers(props))
+        : this.props.creditcards.card.format(this.getValue(props.value)),
       onFocus: callAll(props.onFocus, this.handleFocus),
       onBlur: callAll(props.onBlur, this.handleBlur),
       onChange: callAll(props.onChange, this.handleChange)
@@ -115,7 +121,7 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
 
   getStateAndHelpers (props = {}) {
     const value = this.getValue(props.value)
-    let type = Card.type(value, true)
+    let type = this.props.creditcards.card.type(value, true)
     if (this.props.cardTypes.length &&
         this.props.cardTypes.indexOf(type) === -1) {
       type = ''

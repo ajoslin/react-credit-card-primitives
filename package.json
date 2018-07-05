@@ -47,6 +47,7 @@
     "tape": "^4.0.0"
   },
   "dependencies": {
+    "array-find": "^1.0.0",
     "creditcards": "^3.0.1",
     "is-android": "^1.0.1",
     "prop-types": "^15.5.10"

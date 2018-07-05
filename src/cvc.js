@@ -1,7 +1,8 @@
 const React = require('react')
 const PropTypes = require('prop-types')
-const Cvc = require('creditcards/cvc')
-const Types = require('creditcards/types')
+const creditcards = require('creditcards')
+const find = require('array-find')
+
 const { callAll, INPUT_TYPE } = require('./util')
 
 const AUTOCOMPLETE = 'cc-csc'
@@ -15,12 +16,14 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
     cardType: PropTypes.string,
     onChange: PropTypes.func,
     defaultValue: PropTypes.string,
-    render: PropTypes.func.isRequired
+    render: PropTypes.func.isRequired,
+    creditcards: PropTypes.object
   }
 
   static defaultProps = {
     masked: false,
-    onChange: () => {}
+    onChange: () => {},
+    creditcards
   }
 
   state = {
@@ -39,18 +42,25 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
   }
 
   isValid (value = this.getValue()) {
-    return Cvc.isValid(value, this.props.cardType)
+    return this.props.creditcards.cvc.isValid(value, this.props.cardType)
+  }
+
+  getRestrictedType () {
+    return find(
+      this.props.creditcards.card.types,
+      type => type.name === this.props.cardType
+    )
   }
 
   getMaxLength () {
-    const restrictedType = Types.get(this.props.cardType || '')
-    return restrictedType !== undefined ? restrictedType.cvcLength : 4
+    const type = this.getRestrictedType()
+    return type !== undefined ? type.cvcLength : 4
   }
 
   getPattern () {
-    const restrictedType = Types.get(this.props.cardType || '')
-    return restrictedType !== undefined
-      ? `[0-9]{${restrictedType.cvcLength}}`
+    const type = this.getRestrictedType()
+    return type !== undefined
+      ? `[0-9]{${type.cvcLength}}`
       : '[0-9]{3,4}'
   }
 

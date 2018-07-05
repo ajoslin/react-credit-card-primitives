@@ -1,6 +1,6 @@
 const React = require('react')
 const PropTypes = require('prop-types')
-const Expiration = require('creditcards/expiration')
+const creditcards = require('creditcards')
 const { callAll, INPUT_TYPE } = require('./util')
 
 const MM_YY = /^\D*(\d{1,2})(\D+)?(\d{1,4})?/
@@ -17,11 +17,13 @@ class ExpirationPrimitive extends React.Component {
     defaultMonth: PropTypes.number,
     defaultYear: PropTypes.number,
     onChange: PropTypes.func,
-    render: PropTypes.func.isRequired
+    render: PropTypes.func.isRequired,
+    creditcards: PropTypes.object.isRequired
   }
 
   static defaultProps = {
-    onChange: () => {}
+    onChange: () => {},
+    creditcards
   }
 
   static ERROR_MONTH_YEAR = 'err_monthyear'
@@ -36,7 +38,7 @@ class ExpirationPrimitive extends React.Component {
       year: this.props.defaultYear
     }
     if (this.state.month || this.state.year) {
-      this.state.rawValue = formatExpiration(this.state)
+      this.state.rawValue = this.formatExpiration(this.state)
     }
   }
 
@@ -57,14 +59,15 @@ class ExpirationPrimitive extends React.Component {
   }
 
   getError (expiration) {
+    const { expiration } = this.props.creditcards
     const {month, year} = this.getExpiration(expiration)
-    const monthValid = Expiration.month.isValid(month)
-    const yearValid = Expiration.year.isValid(year)
+    const monthValid = expiration.month.isValid(month)
+    const yearValid = expiration.year.isValid(year)
 
     if (!monthValid && !yearValid) return ExpirationPrimitive.ERROR_MONTH_YEAR
     if (!monthValid) return ExpirationPrimitive.ERROR_MONTH
     if (!yearValid) return ExpirationPrimitive.ERROR_YEAR
-    if (Expiration.isPast(month, year)) return ExpirationPrimitive.ERROR_PAST_DATE
+    if (expiration.isPast(month, year)) return ExpirationPrimitive.ERROR_PAST_DATE
   }
 
   handleChange = ev => {
@@ -75,13 +78,13 @@ class ExpirationPrimitive extends React.Component {
     if (this.isControlled()) {
       this.setState({ rawValue }, () => {
         this.props.onChange(
-          this.getStateAndHelpers(parseInput(this.state.rawValue))
+          this.getStateAndHelpers(this.parseInput(this.state.rawValue))
         )
       })
     } else {
       this.setState({
         rawValue,
-        ...parseInput(rawValue)
+        ...this.parseInput(rawValue)
       }, () => {
         this.props.onChange(this.getStateAndHelpers())
       })
@@ -101,7 +104,7 @@ class ExpirationPrimitive extends React.Component {
       placeholder: `MM${SEPARATOR}YY`,
       maxLength: 2 + SEPARATOR.length + 4,
       onChange: callAll(props.onChange, this.handleChange),
-      value: formatExpiration(this.getExpiration(props)) || formatRawValue(this.state.rawValue)
+      value: this.formatExpiration(this.getExpiration(props)) || this.formatRawValue(this.state.rawValue)
     }
   }
 
@@ -124,9 +127,8 @@ class ExpirationPrimitive extends React.Component {
   render () {
     return this.props.render(this.getStateAndHelpers())
   }
-}
 
-function parseInput (raw) {
+ parseInput (raw) {
   const parts = raw.match(MM_YY)
 
   if (!parts) return { month: undefined, year: undefined }
@@ -135,14 +137,14 @@ function parseInput (raw) {
   const rawYear = parts[3]
 
   return {
-    month: Expiration.month.parse(rawMonth),
+    month: this.props.creditcards.expiration.month.parse(rawMonth),
     year: (!rawYear || rawYear.length % 2)
       ? undefined
-      : Expiration.year.parse(rawYear, rawYear.length < 4)
+      : this.props.creditcards.expiration.year.parse(rawYear, rawYear.length < 4)
   }
 }
 
-function formatExpiration (expiration = {}) {
+ formatExpiration (expiration = {}) {
   if (!expiration.month || !expiration.year) return
   return [
     pad(expiration.month),
@@ -151,30 +153,33 @@ function formatExpiration (expiration = {}) {
       : expiration.year
   ]
     .join(SEPARATOR)
+ }
+
+  formatRawValue (raw) {
+     if (!raw) return ''
+     const parts = raw.match(MM_YY)
+     if (!parts) return ''
+
+     let month = parts[1] || ''
+     let separator = parts[2] || ''
+     let year = parts[3] || ''
+
+     if (year.length > 0) {
+       separator = SEPARATOR
+     } else if (separator === ' /') {
+       month = month.substring(0, 1)
+       separator = ''
+     } else if (month.length === 2 || separator) {
+       separator = SEPARATOR
+     } else if (month.length === 1 && month !== '0' && month !== '1') {
+       month = '0' + month
+       separator = ' / '
+     }
+
+     return [month, separator, year].join('')
+   }
 }
 
-function formatRawValue (raw) {
-  if (!raw) return ''
-  const parts = raw.match(MM_YY)
-  if (!parts) return ''
-
-  let month = parts[1] || ''
-  let separator = parts[2] || ''
-  let year = parts[3] || ''
-
-  if (year.length > 0) {
-    separator = SEPARATOR
-  } else if (separator === ' /') {
-    month = month.substring(0, 1)
-    separator = ''
-  } else if (month.length === 2 || separator) {
-    separator = SEPARATOR
-  } else if (month.length === 1 && month !== '0' && month !== '1') {
-    month = '0' + month
-    separator = ' / '
-  }
-
-  return [month, separator, year].join('')
 }
 
 module.exports = exports.default = ExpirationPrimitive
