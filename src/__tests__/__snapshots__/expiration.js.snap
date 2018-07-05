@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`basic value 1`] = `
+Object {
+  "aria-invalid": "false",
+  "autoComplete": "exp-date",
+  "maxLength": 9,
+  "name": "cc-exp",
+  "onChange": [Function],
+  "placeholder": "MM / YY",
+  "type": "text",
+  "value": "10 / 22",
+}
+`;

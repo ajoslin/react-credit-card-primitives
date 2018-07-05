@@ -59,15 +59,14 @@ class ExpirationPrimitive extends React.Component {
   }
 
   getError (expiration) {
-    const { expiration } = this.props.creditcards
     const {month, year} = this.getExpiration(expiration)
-    const monthValid = expiration.month.isValid(month)
-    const yearValid = expiration.year.isValid(year)
+    const monthValid = this.props.creditcards.expiration.month.isValid(month)
+    const yearValid = this.props.creditcards.expiration.year.isValid(year)
 
     if (!monthValid && !yearValid) return ExpirationPrimitive.ERROR_MONTH_YEAR
     if (!monthValid) return ExpirationPrimitive.ERROR_MONTH
     if (!yearValid) return ExpirationPrimitive.ERROR_YEAR
-    if (expiration.isPast(month, year)) return ExpirationPrimitive.ERROR_PAST_DATE
+    if (this.props.creditcards.expiration.isPast(month, year)) return ExpirationPrimitive.ERROR_PAST_DATE
   }
 
   handleChange = ev => {
@@ -128,58 +127,56 @@ class ExpirationPrimitive extends React.Component {
     return this.props.render(this.getStateAndHelpers())
   }
 
- parseInput (raw) {
-  const parts = raw.match(MM_YY)
+  parseInput (raw) {
+    const parts = raw.match(MM_YY)
 
-  if (!parts) return { month: undefined, year: undefined }
+    if (!parts) return { month: undefined, year: undefined }
 
-  const rawMonth = parts[1]
-  const rawYear = parts[3]
+    const rawMonth = parts[1]
+    const rawYear = parts[3]
 
-  return {
-    month: this.props.creditcards.expiration.month.parse(rawMonth),
-    year: (!rawYear || rawYear.length % 2)
-      ? undefined
-      : this.props.creditcards.expiration.year.parse(rawYear, rawYear.length < 4)
+    return {
+      month: this.props.creditcards.expiration.month.parse(rawMonth),
+      year: (!rawYear || rawYear.length % 2)
+        ? undefined
+        : this.props.creditcards.expiration.year.parse(rawYear, rawYear.length < 4)
+    }
   }
-}
 
- formatExpiration (expiration = {}) {
-  if (!expiration.month || !expiration.year) return
-  return [
-    pad(expiration.month),
-    expiration.year >= 2000 && expiration.year <= 2100
-      ? String(expiration.year).substring(2)
-      : expiration.year
-  ]
-    .join(SEPARATOR)
- }
+  formatExpiration (expiration = {}) {
+    if (!expiration.month || !expiration.year) return
+    return [
+      pad(expiration.month),
+      expiration.year >= 2000 && expiration.year <= 2100
+        ? String(expiration.year).substring(2)
+        : expiration.year
+    ]
+      .join(SEPARATOR)
+  }
 
   formatRawValue (raw) {
-     if (!raw) return ''
-     const parts = raw.match(MM_YY)
-     if (!parts) return ''
+    if (!raw) return ''
+    const parts = raw.match(MM_YY)
+    if (!parts) return ''
 
-     let month = parts[1] || ''
-     let separator = parts[2] || ''
-     let year = parts[3] || ''
+    let month = parts[1] || ''
+    let separator = parts[2] || ''
+    let year = parts[3] || ''
 
-     if (year.length > 0) {
-       separator = SEPARATOR
-     } else if (separator === ' /') {
-       month = month.substring(0, 1)
-       separator = ''
-     } else if (month.length === 2 || separator) {
-       separator = SEPARATOR
-     } else if (month.length === 1 && month !== '0' && month !== '1') {
-       month = '0' + month
-       separator = ' / '
-     }
+    if (year.length > 0) {
+      separator = SEPARATOR
+    } else if (separator === ' /') {
+      month = month.substring(0, 1)
+      separator = ''
+    } else if (month.length === 2 || separator) {
+      separator = SEPARATOR
+    } else if (month.length === 1 && month !== '0' && month !== '1') {
+      month = '0' + month
+      separator = ' / '
+    }
 
-     return [month, separator, year].join('')
-   }
-}
-
+    return [month, separator, year].join('')
+  }
 }
 
 module.exports = exports.default = ExpirationPrimitive
