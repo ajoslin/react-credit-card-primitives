@@ -47,7 +47,7 @@
     "tape": "^4.0.0"
   },
   "dependencies": {
-    "creditcards": "^2.1.2",
+    "creditcards": "^3.0.1",
     "is-android": "^1.0.1",
     "prop-types": "^15.5.10"
   }
