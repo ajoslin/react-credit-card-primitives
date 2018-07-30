@@ -60,19 +60,6 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
     return this.props.cardTypes.some(type => this.props.creditcards.card.isValid(value, type))
   }
 
-  getMaxLength (value) {
-    const currentType = this.props.creditcards.card.type(this.getValue(value), true) || ''
-    const typeObject = find(
-      this.props.creditcards.card.types,
-      type => type.name === currentType
-    )
-    if (!typeObject || !typeObject.digits) return
-    if (Array.isArray(typeObject.digits)) {
-      return Math.max.apply(Math, typeObject.digits)
-    }
-    return typeObject.digits
-  }
-
   setValue = (value = '') => {
     if (value) {
       const { parse, format } = this.props.creditcards.card
@@ -103,7 +90,6 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
       name: NAME,
       autoComplete: AUTOCOMPLETE,
       type: INPUT_TYPE,
-      maxLength: this.getMaxLength(value),
       placeholder: 'Card number',
       value: (this.props.masked && !this.state.focused)
         ? this.getMaskedValue(this.getStateAndHelpers(props))
