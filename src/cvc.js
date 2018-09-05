@@ -79,13 +79,13 @@ module.exports = exports.default = class CvcPrimitive extends React.Component {
   handleChange = ev => this.setValue(ev.target.value)
 
   getInputProps = (props = {}) => ({
-    ...props,
     name: NAME,
     autoComplete: AUTOCOMPLETE,
     type: INPUT_TYPE,
     placeholder: 'CVC',
     maxLength: this.getMaxLength(),
     pattern: this.getPattern(),
+    ...props,
     value: (this.props.masked && !this.state.focused)
       ? this.getValue().replace(/./g, MASK_CHAR)
       : this.getValue(),

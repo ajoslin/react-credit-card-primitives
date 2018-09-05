@@ -93,7 +93,6 @@ class ExpirationPrimitive extends React.Component {
   getInputProps = (props = {}) => {
     const value = this.getExpiration(props)
     return {
-      ...props,
       'aria-invalid': (value.month || value.year)
         ? String(!this.isValid(props.value))
         : undefined,
@@ -102,6 +101,7 @@ class ExpirationPrimitive extends React.Component {
       type: INPUT_TYPE,
       placeholder: `MM${SEPARATOR}YY`,
       maxLength: 2 + SEPARATOR.length + 4,
+      ...props,
       onChange: callAll(props.onChange, this.handleChange),
       value: this.formatExpiration(this.getExpiration(props)) || this.formatRawValue(this.state.rawValue)
     }

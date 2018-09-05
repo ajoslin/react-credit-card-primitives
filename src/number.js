@@ -83,7 +83,6 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
   getInputProps = (props = {}) => {
     const value = this.getValue(props.value)
     return {
-      ...props,
       'aria-invalid': value
         ? String(!this.isValid(value))
         : value,
@@ -91,6 +90,7 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
       autoComplete: AUTOCOMPLETE,
       type: INPUT_TYPE,
       placeholder: 'Card number',
+      ...props,
       value: (this.props.masked && !this.state.focused)
         ? this.getMaskedValue(this.getStateAndHelpers(props))
         : this.props.creditcards.card.format(this.getValue(props.value)),
