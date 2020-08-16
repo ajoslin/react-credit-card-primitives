@@ -145,6 +145,7 @@ The `render` prop function is called with the following `NumberStateAndHelpers` 
 | value         | state       | string   | The currently entered credit card number (without spaces or formatting)                                                                                                                                                                                                                   |
 | valid         | state       | boolean  | Whether the given `value` is a valid credit card number (via [creditcards.card.isValid](https://github.com/bendrucker/creditcards#cardisvalidnumber-type---boolean). If the `cardTypes` property is passed in, this says whether the value is a valid version of one of those card types. |
 | type          | state       | string   | What [credit card type](https://github.com/bendrucker/creditcards-types#card-types) the currently entered number is (eg `'Visa'`).                                                                                                                                                        |
+| focused       | state       | string   | Whether the input is focused.                                                                                                                                                        |
 | getInputProps | prop getter | function | The properties to put on your `<input>` element.                                                                                                                                                                                                                                          |
 | getLabelProps | prop getter | function | The properties to put on your `<label>` element.                                                                                                                                                                                                                                         |
 #### creditcards 
@@ -226,6 +227,7 @@ The `render` prop function is called with the following `ExpirationStateAndHelpe
 | rawValue      | state       | string   | The value currently entered into the input (e.g. `'11 / 19'`  |
 | error         | state       | string   | The current error, if input is not valid. See `Errors` below. |
 | valid         | state       | boolean  | Whether the input is currently a valid month/year.            |
+| focused       | state       | boolean  | Whether the input is focused                                                                       |
 | getInputProps | prop getter | function | The properties to put on your `<input>` element.              |
 | getLabelProps | prop getter | function | The properties to put on your `<label>` element.                                                                                                                                                                                                                                          |
 #### creditcards 

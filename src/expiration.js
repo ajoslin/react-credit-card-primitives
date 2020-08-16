@@ -35,7 +35,8 @@ class ExpirationPrimitive extends React.Component {
     super(props)
     this.state = {
       month: this.props.defaultMonth,
-      year: this.props.defaultYear
+      year: this.props.defaultYear,
+      focused: false
     }
     if (this.state.month || this.state.year) {
       this.state.rawValue = this.formatExpiration(this.state)
@@ -69,6 +70,8 @@ class ExpirationPrimitive extends React.Component {
     if (this.props.creditcards.expiration.isPast(month, year)) return ExpirationPrimitive.ERROR_PAST_DATE
   }
 
+  handleFocus = ev => this.setState({ focused: true })
+  handleBlur = ev => this.setState({ focused: false })
   handleChange = ev => {
     this.setRawValue(ev.target.value)
   }
@@ -102,6 +105,8 @@ class ExpirationPrimitive extends React.Component {
       placeholder: `MM${SEPARATOR}YY`,
       maxLength: 2 + SEPARATOR.length + 4,
       ...props,
+      onFocus: callAll(props.onFocus, this.handleFocus),
+      onBlur: callAll(props.onBlur, this.handleBlur),
       onChange: callAll(props.onChange, this.handleChange),
       value: this.formatExpiration(this.getExpiration(props)) || this.formatRawValue(this.state.rawValue)
     }
@@ -119,7 +124,8 @@ class ExpirationPrimitive extends React.Component {
       error: this.getError(props),
       valid: this.isValid(props),
       setRawValue: this.setRawValue,
-      getInputProps: this.getInputProps
+      getInputProps: this.getInputProps,
+      focused: this.state.focused,
     }
   }
 

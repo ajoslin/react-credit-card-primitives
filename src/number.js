@@ -117,7 +117,8 @@ module.exports = exports.default = class NumberPrimitive extends React.Component
       value,
       valid: this.isValid(props.value),
       setValue: this.setValue,
-      getInputProps: this.getInputProps
+      getInputProps: this.getInputProps,
+      focused: this.state.focused,
     }
   }
 
